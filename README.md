@@ -104,3 +104,9 @@ Press Ctrl+C to stop.
 - Linux with hidraw support (any modern kernel)
 - `lsusb` and `udevadm` (from `usbutils` and `systemd` packages)
 - Root access or udev rule for `/dev/hidraw*` permissions
+
+## Known issues
+
+#### Battery percentage changes only when charging cable plugged/unplugged
+
+Seems like this is the way how mouse firmware works. Maybe there is a special command to force re-update battery status, but currently i don't find it.
