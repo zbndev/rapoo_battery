@@ -29,7 +29,8 @@ transitions and is ignored by this script.
 Usage:
     rapoo-battery              # Read battery once
     rapoo-battery --watch      # Monitor continuously
-    rapoo-battery --json       # JSON output (for waybar/polybar)
+    rapoo-battery --json       # JSON output (generic)
+    rapoo-battery --waybar     # Waybar-compatible JSON output
     rapoo-battery --raw        # Show raw report bytes
 """
 
@@ -238,6 +239,10 @@ def main():
         help="Output as JSON",
     )
     parser.add_argument(
+        "--waybar", action="store_true",
+        help="Output as Waybar-compatible JSON (text, percentage, alt, tooltip, class)",
+    )
+    parser.add_argument(
         "--raw", action="store_true",
         help="Include raw report hex in output",
     )
@@ -327,10 +332,22 @@ def main():
         print("Make sure the mouse is powered on and the dongle is connected.", file=sys.stderr)
         sys.exit(1)
 
-    if args.json:
+    if args.waybar:
+        pct = result["battery"]
+        chg = result["charging"]
+        output = {
+            "text": f"{pct}%",
+            "percentage": pct,
+            "alt": "charging" if chg else "discharging",
+            "tooltip": f"Rapoo Mouse: {pct}% — {'Charging' if chg else 'On Battery'}",
+            "class": "charging" if chg else ("critical" if pct <= 15 else ("warning" if pct <= 30 else "discharging")),
+        }
+        print(json.dumps(output))
+    elif args.json:
         output = {
             "battery_percent": result["battery"],
             "charging": result["charging"],
+            "state": "charging" if result["charging"] else "discharging",
             "device": dev_path,
         }
         if args.raw:

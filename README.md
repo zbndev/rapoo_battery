@@ -57,8 +57,11 @@ rapoo-battery
 # Monitor continuously (single-line, updates every ~3 seconds)
 rapoo-battery --watch
 
-# JSON output (for waybar, polybar, i3bar, etc.)
+# JSON output (generic, for polybar, i3bar, etc.)
 rapoo-battery --json
+
+# Waybar-compatible JSON output
+rapoo-battery --waybar
 
 # Show raw report bytes
 rapoo-battery --raw
@@ -90,13 +93,30 @@ Press Ctrl+C to stop.
 
 ```json
 "custom/rapoo": {
-    "exec": "rapoo-battery --json",
+    "exec": "rapoo-battery --waybar",
     "return-type": "json",
-    "format": "{charging_icon} {battery_percent}%",
-    "format-charging": "⚡ {battery_percent}%",
-    "interval": 30
+    "format": "🔋 {percentage}%",
+    "format-charging": "⚡ {percentage}%",
+    "format-critical": "🪫 {percentage}%",
+    "interval": 30,
+    "states": {
+        "warning": 30,
+        "critical": 15
+    }
 }
 ```
+
+The `--waybar` flag outputs JSON with keys recognized by Waybar's custom module:
+
+| Key | Value | Waybar placeholder |
+|-----|-------|--------------------|
+| `text` | `"45%"` | `{text}` |
+| `percentage` | `45` | `{percentage}` |
+| `alt` | `"charging"` or `"discharging"` | `{alt}` |
+| `tooltip` | `"Rapoo Mouse: 45% — Charging"` | `{tooltip}` |
+| `class` | `"charging"` / `"warning"` / `"critical"` / `"discharging"` | CSS class |
+
+The `class` value matches Waybar's `states` thresholds, so the `format-critical` and `format-warning` (default) variants activate automatically when battery drops.
 
 ## Requirements
 
