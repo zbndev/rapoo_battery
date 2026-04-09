@@ -4,16 +4,18 @@ Read battery percentage and charging status from Rapoo gaming mice on Linux via 
 
 ## Supported Devices
 
-| Device | USB ID (VID:PID) |
-|--------|-----------------|
-| VT3 Pro Max | 24ae:1244 |
-| VT3 Max Gen-2 | 24ae:3102 |
-| VT9 Pro | 24ae:1417 |
-| VT9 Pro Mini | 24ae:3103 |
+| Device        | USB ID (VID:PID) |
+| ------------- | ---------------- |
+| VT3 Pro       | 24ae:1215        |
+| VT3 Pro Max   | 24ae:1244        |
+| VT3 Max Gen-2 | 24ae:3102        |
+| VT9 Pro       | 24ae:1417        |
+| VT9 Pro Mini  | 24ae:3103        |
 
 ## How It Works
 
 The USB dongle exposes two HID interfaces:
+
 - **Interface 0** — Standard mouse input (X/Y/buttons/wheel)
 - **Interface 1** — Vendor-defined HID collections including battery status
 
@@ -108,13 +110,13 @@ Press Ctrl+C to stop.
 
 The `--waybar` flag outputs JSON with keys recognized by Waybar's custom module:
 
-| Key | Value | Waybar placeholder |
-|-----|-------|--------------------|
-| `text` | `"45%"` | `{text}` |
-| `percentage` | `45` | `{percentage}` |
-| `alt` | `"charging"` or `"discharging"` | `{alt}` |
-| `tooltip` | `"Rapoo Mouse: 45% — Charging"` | `{tooltip}` |
-| `class` | `"charging"` / `"warning"` / `"critical"` / `"discharging"` | CSS class |
+| Key          | Value                                                       | Waybar placeholder |
+| ------------ | ----------------------------------------------------------- | ------------------ |
+| `text`       | `"45%"`                                                     | `{text}`           |
+| `percentage` | `45`                                                        | `{percentage}`     |
+| `alt`        | `"charging"` or `"discharging"`                             | `{alt}`            |
+| `tooltip`    | `"Rapoo Mouse: 45% — Charging"`                             | `{tooltip}`        |
+| `class`      | `"charging"` / `"warning"` / `"critical"` / `"discharging"` | CSS class          |
 
 The `class` value matches Waybar's `states` thresholds, so the `format-critical` and `format-warning` (default) variants activate automatically when battery drops.
 
