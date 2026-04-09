@@ -7,6 +7,7 @@ connected via 2.4GHz USB dongle. No kernel module or proprietary driver needed.
 
 Supported devices (VID 0x24AE):
   - VT3 Pro Max (PID 0x1244)
+  - VT3 Pro (PID 0x1215)
   - VT3 Max Gen-2 (PID 0x3102)
   - VT9 Pro (PID 0x1417)
   - VT9 Pro Mini (PID 0x3103)
@@ -42,7 +43,7 @@ import argparse
 import subprocess
 
 RAPOO_VID = 0x24AE
-RAPOO_PIDS = [0x1244, 0x3102, 0x1417, 0x3103]
+RAPOO_PIDS = [0x1215, 0x1244, 0x3102, 0x1417, 0x3103]
 
 BATTERY_REPORT_MARKER = 0xBB
 CHARGING_STATE_CHARGING = 0x02
